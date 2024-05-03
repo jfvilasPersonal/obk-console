@@ -1,5 +1,6 @@
 # Getting Started with ObkAuthorizator Admin console
 
+# **WIP**
 You must enable console (and the API) via Authroizator YAML, inside the 'config' section:
 
 ```yaml
