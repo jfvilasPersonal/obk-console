@@ -42,4 +42,4 @@ The name of the controller service typically be something like:
 ```
 
 #### **Important**
-Oberkorn do not protect web console nor API's by default, you can use an Oberkorn Authorizator to protect the web console, there is plenty of info on project homepage.
+Oberkorn do not protect web console nor API's by default, you can use an Oberkorn Authorizator to protect the web console, there is plenty of info on project website about how to do this. **Remember: web console is just another web application**.
