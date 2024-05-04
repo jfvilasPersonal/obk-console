@@ -8,11 +8,11 @@ import { Image } from 'mui-image'
 function Welcome() {
     const navigate = useNavigate();
     var ctx:Context = new Context();
-    const [ authorizator, setAuthrorizator]  = useState ('');
-    const [ authorizators, setAuthrorizators]  = useState ([]);
+    const [ authorizator, setAuthorizator]  = useState ('');
+    const [ authorizators, setAuthorizators]  = useState ([]);
 
     const getAuthorizators= () => {
-        fetch(`/obk-console/authorizators`).then( response => response.json().then ( data => setAuthrorizators(data)) );
+        fetch(`/obk-console/authorizators`).then( response => response.json().then ( data => setAuthorizators(data)) );
     }
 
     useEffect(getAuthorizators, []);
@@ -28,7 +28,7 @@ function Welcome() {
     }
     
     const handleChange = (event: SelectChangeEvent) => {
-            setAuthrorizator(event.target.value);
+            setAuthorizator(event.target.value);
     };
 
     return <>
