@@ -18,12 +18,14 @@ function Welcome() {
     useEffect(getAuthorizators, []);
 
     const enterClick = () => {
-            ctx.authenticated=true;
-            ctx.username='admin';
-            ctx.baseApiUrl=`/obk-authorizator/${authorizator}/api`;
-            ctx.save();
-            navigate(`/obk-console/${authorizator}/main`);
-        }
+        // authorizator var contains 'namespace/authname'
+        ctx.authenticated=true;
+        ctx.username='admin';
+        //ctx.baseApiUrl=`/obk-authorizator/${authorizator}/api`;
+        ctx.baseApiUrl=`/obk-console/proxy/${authorizator}/api`;
+        ctx.save();
+        navigate(`/obk-console/${authorizator}/main`);
+    }
     
     const handleChange = (event: SelectChangeEvent) => {
             setAuthrorizator(event.target.value);
@@ -41,8 +43,8 @@ function Welcome() {
                         <InputLabel id="labelAuth">Authorizator</InputLabel>
                         <Select labelId="labelAuth" value={authorizator} onChange={handleChange} label="Authorizator">
                             { authorizators.map( (v:any) => {
-                                var value=`${v.namespace}:${v.name}`;
-                                return <MenuItem value={v.name}>{value}</MenuItem>
+                                var value=`${v.namespace}/${v.name}`;
+                                return <MenuItem value={value}>{value}</MenuItem>
                             })}
                         </Select>
                     </FormControl>

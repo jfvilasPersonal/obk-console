@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Context } from "../model/Context";
-import { Stack, Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import JSONTable from 'simple-json-table'; 
 
 function Rulesets() {

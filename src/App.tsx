@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/obk-console" Component={Welcome} />
-      <Route path="/obk-console/:authorizator/main" Component={Main} />
+      <Route path="/obk-console/:namespace/:authorizator/main" Component={Main} />
       </Routes>
     </BrowserRouter>
 
