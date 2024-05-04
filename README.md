@@ -20,7 +20,7 @@ env:
     value: 'true'
 ```
 
-Finally you can point your browser to address 'http://your.dns.name:3000/obk-console'. Plese remeber **you must create an ingress rule** entry like this one in your ingress:
+Finally you can point your browser to address 'http://your.dns.name:3882/obk-console'. Plese remeber **you must create an ingress rule** entry like this one in your ingress:
 
 ```yaml
 - host: localhost
@@ -32,7 +32,7 @@ Finally you can point your browser to address 'http://your.dns.name:3000/obk-con
         service:
             name: your-controller-service-name
             port:
-            number: 3000
+            number: 3882
 ```
 
 The name of the controller service typically be something like:
