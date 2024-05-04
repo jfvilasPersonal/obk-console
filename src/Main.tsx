@@ -4,7 +4,7 @@ import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogContentText
 import MenuIcon from '@mui/icons-material/Menu';
 import UserIcon from '@mui/icons-material/Person';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { Beenhere, ExitToApp, Rule, RuleFolder, Settings } from "@mui/icons-material";
+import { Beenhere, ExitToApp, Link, Rule, RuleFolder, Settings } from "@mui/icons-material";
 import Overview from "./components/Overview";
 import { useNavigate } from "react-router-dom";
 import Rulesets from "./components/Rulesets";
@@ -59,6 +59,10 @@ function Main() {
         navigate('/obk-console');
     }
 
+    const oberkornClick = () => {
+        window.open('https://jfvilaspersonal.github.io/oberkorn','_blank', 'rel=noopener noreferrer');
+    }
+
     const closeDialogClick = () => {
         setShowDialog({...showDialog, visible:false});
         if ((showDialog as any).target) navigate((showDialog as any).target);
@@ -103,7 +107,13 @@ function Main() {
                             <ListItemText>Rulesets</ListItemText>
                         </ListItemButton>
                     </ListItem>
-                    <Divider/>
+                    <Divider/>                   
+                    <ListItem key='Oberkorn'>
+                        <ListItemButton onClick={oberkornClick}>
+                            <ListItemIcon><Link/></ListItemIcon>
+                            <ListItemText>Oberkorn</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
                     <ListItem key='Exit'>
                         <ListItemButton onClick={exitClick}>
                             <ListItemIcon><ExitToApp/></ListItemIcon>
