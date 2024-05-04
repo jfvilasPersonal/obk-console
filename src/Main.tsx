@@ -60,7 +60,8 @@ function Main() {
     }
 
     const oberkornClick = () => {
-        window.open('https://jfvilaspersonal.github.io/oberkorn','_blank', 'rel=noopener noreferrer');
+        //window.open('https://jfvilaspersonal.github.io/oberkorn', '_blank', 'rel=noopener noreferrer');
+        window.open('https://jfvilaspersonal.github.io/oberkorn');
     }
 
     const closeDialogClick = () => {
