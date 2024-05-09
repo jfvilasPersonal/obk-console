@@ -8,7 +8,7 @@ function Validators() {
     const [validators, setValidators] = useState({});
 
     const getValidators =  () => {
-        fetch(`${ctx.baseApiUrl}/validators`).then( response => response.json().then ( data => setValidators(data)) );
+        fetch(`${ctx.baseApiUrl}/overview/validators`).then( response => response.json().then ( data => setValidators(data)) );
     }
 
     useEffect(getValidators, []);

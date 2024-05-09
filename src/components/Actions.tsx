@@ -3,7 +3,7 @@ import { Context } from "../model/Context";
 import { Typography } from "@mui/material";
 import JSONTable from 'simple-json-table'; 
 
-function Rulesets() {
+function Actions() {
     const ctx:Context = new Context();
     const [rulesets, setRulesets] = useState({});
     const getRulesets =  () => {
@@ -20,4 +20,4 @@ function Rulesets() {
         </>
     );
 }
-export default Rulesets;
+export default Actions;

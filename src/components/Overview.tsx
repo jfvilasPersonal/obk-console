@@ -9,10 +9,10 @@ function Overview() {
     const [status, setStatus] = useState({totalRequests:0, totalMicros:0});
 
     const getConfig =  () => {
-        fetch(`${ctx.baseApiUrl}/config`).then( response => response.json().then ( data => setEnv(data)) );
+        fetch(`${ctx.baseApiUrl}/overview/config`).then( response => response.json().then ( data => setEnv(data)) );
     }
     const getStatus =  () => {
-        fetch(`${ctx.baseApiUrl}/status`).then( response => response.json().then ( data => setStatus(data)) );
+        fetch(`${ctx.baseApiUrl}/overview/status`).then( response => response.json().then ( data => setStatus(data)) );
     }
 
     useEffect(getStatus, []);

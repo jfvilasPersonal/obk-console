@@ -4,12 +4,14 @@ import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogContentText
 import MenuIcon from '@mui/icons-material/Menu';
 import UserIcon from '@mui/icons-material/Person';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { Beenhere, ExitToApp, Link, Rule, RuleFolder, Settings } from "@mui/icons-material";
+import { Beenhere, ExitToApp, Group, Link, QueryStats, RocketLaunch, Rule, RuleFolder, Settings } from "@mui/icons-material";
 import Overview from "./components/Overview";
 import { useNavigate } from "react-router-dom";
 import Rulesets from "./components/Rulesets";
 import Validators from "./components/Validators";
 import { Image } from 'mui-image'
+import Users from "./components/Users";
+import Actions from "./components/Actions";
 
 
 function Main() {
@@ -22,37 +24,52 @@ function Main() {
     const [showOverview, setShowOverview] = useState(false);
     const [showValidators, setShowValidators] = useState(false);
     const [showRulesets, setShowRulesets] = useState(false);
+    const [showUsers, setShowUsers] = useState(false);
+    const [showActions, setShowActions] = useState(false);
     const [showDialog, setShowDialog] = useState({ visible:false, title:'Error', message:'Error text unspecified.', target:'' });
 
     const getConfig =  () => {
-        fetch(`${ctx.baseApiUrl}/config`).then( response => response.json()
+        fetch(`${ctx.baseApiUrl}/overview/config`).then( response => response.json()
             .then ( data => setEnv(data)) )
             .catch ( (err) => {
-                setShowDialog({...showDialog, visible:true, message:'Error accessing Authorizator', target:'/obk-console'});
+                //setShowDialog({...showDialog, visible:true, message:'Error accessing Authorizator', target:'/obk-console'});
             });
     }
 
     useEffect(getConfig, []);
 
-    const overviewClick = () => {
-        setOpen(!open);
-        setShowOverview(true);
+    const allFalse = () => {
+        setOpen(false);
+        setShowOverview(false);
         setShowValidators(false);
         setShowRulesets(false);
+        setShowUsers(false);
+        setShowActions(false);
+    }
+
+    const overviewClick = () => {
+        allFalse();
+        setShowOverview(true);
     }
 
     const validatorsClick = () => {
-        setOpen(!open);
-        setShowOverview(false);
+        allFalse();
         setShowValidators(true);
-        setShowRulesets(false);
     }
 
     const rulesetsClick = () => {
-        setOpen(!open);
-        setShowOverview(false);
-        setShowValidators(false);
+        allFalse();
         setShowRulesets(true);
+    }
+
+    const usersClick = () => {
+        allFalse();
+        setShowUsers(true);
+    }
+
+    const actionsClick = () => {
+        allFalse();
+        setShowActions(true);
     }
 
     const exitClick = () => {
@@ -60,7 +77,6 @@ function Main() {
     }
 
     const oberkornClick = () => {
-        //window.open('https://jfvilaspersonal.github.io/oberkorn', '_blank', 'rel=noopener noreferrer');
         window.open('https://jfvilaspersonal.github.io/oberkorn');
     }
 
@@ -108,7 +124,25 @@ function Main() {
                             <ListItemText>Rulesets</ListItemText>
                         </ListItemButton>
                     </ListItem>
+
                     <Divider/>                   
+                    
+                    <ListItem key='Users'>
+                        <ListItemButton onClick={usersClick}>
+                            <ListItemIcon><Group/></ListItemIcon>
+                            <ListItemText>Users</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+
+                    <ListItem key='Actions'>
+                        <ListItemButton onClick={actionsClick}>
+                            <ListItemIcon><RocketLaunch/></ListItemIcon>
+                            <ListItemText>Actions</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+
+                    <Divider/>                   
+                    
                     <ListItem key='Oberkorn'>
                         <ListItemButton onClick={oberkornClick}>
                             <ListItemIcon><Link/></ListItemIcon>
@@ -126,6 +160,8 @@ function Main() {
             {  showOverview && <Overview/>  }
             {  showValidators && <Validators/> }
             {  showRulesets && <Rulesets/> }
+            {  showActions && <Actions/> }
+            {  showUsers && <Users/> }
             {/* <Dialog open={(showDialog as any).visible} onClose={closeDialogClick}> */}
             <Dialog open={(showDialog as any).visible}>
                 <DialogTitle id="alert-dialog-title">
