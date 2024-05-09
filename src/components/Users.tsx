@@ -5,7 +5,7 @@ import UserTrace from "./UserTrace";
 
 function Users() {
     const ctx:Context = new Context();
-    const [currentTab, setCurrentTab] = useState('actions');
+    const [currentTab, setCurrentTab] = useState('invalidate');
     const [showUserTrace, setShowUserTrace] = useState(false);
     const [traceSubject, setTraceSubject] = useState('');
     const [invSubject, setinvSubject] = useState('');
@@ -72,10 +72,10 @@ function Users() {
     return (
         <>
             <Tabs value={currentTab} onChange={changeTab} centered>
-                <Tab value='actions' label='Actions'/>
+                <Tab value='invalidate' label='Invalidate'/>
                 <Tab value='diagnostics' label='Diagnostics'/>
             </Tabs>
-            { currentTab==='actions' && (
+            { currentTab==='invalidate' && (
                 <Stack direction={"column"} sx={{m:2}}>
                     <Stack direction='column' sx={{m:1}}>
                         <Typography variant="h6">
