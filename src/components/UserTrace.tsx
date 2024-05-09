@@ -27,25 +27,21 @@ function UserTrace(props:any) {
             "validator":props.validator,
             "id":id
         };
-            console.log(body);
-        var newId=id;
         var resp = await fetch(`${ctx.baseApiUrl}/trace/events`, { method:'POST', body: JSON.stringify(body), headers: {"Content-Type": "application/json"} });
         var data = await resp.json();
-        if (data.ok) {
+        if (data.ok && data.events && data.events.length>0) {
             var rcs=data.events as RequestContext[];
             var lines='';
             for (var rc of rcs) {
                 lines+=rc.epoch+'  '+rc.action + '\r\n';
                 if (rc.epoch>id) {
                     console.log('update '+rc.epoch);
-                    newId=rc.epoch;
+                    setId(id => rc.epoch);
                 }
             }
-            setId(newId);
             setContent (content+lines);
         }
-
-    }, 1000);
+    }, 250);
 
     return (
         <>

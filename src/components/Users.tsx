@@ -7,7 +7,11 @@ function Users() {
     const ctx:Context = new Context();
     const [currentTab, setCurrentTab] = useState('actions');
     const [showUserTrace, setShowUserTrace] = useState(false);
-    const [subject, setSubject] = useState('');
+    const [traceSubject, setTraceSubject] = useState('');
+    const [invSubject, setinvSubject] = useState('');
+    const [invAud, setInvAud] = useState('');
+    const [invIss, setInvIss] = useState('');
+    const [invClaim, setInvClaim] = useState('');
     const [buttonText, setButtonText] = useState('start');
     const [validator, setValidator]  = useState ('');
     const [validators, setValidators]  = useState ([]);
@@ -22,16 +26,27 @@ function Users() {
         setCurrentTab(newValue);
     };
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleValidatorChange = (event: SelectChangeEvent) => {
         setValidator(event.target.value);
     };
-    
+
+    const invSubjectClick = async () => {
+    }
+
+    const invClaimClick = async () => {
+    }
+
+    const invIssClick = async () => {
+    }
+
+    const invAudClick = async () => {
+    }
+
     const startClick = async () => {
-        console.log('startclick');
         if (buttonText==='start') {
             var data= {
                 "validator":validator,
-                "sub":subject,
+                "sub":traceSubject,
                 "maxEvents":100
             };
     
@@ -40,59 +55,70 @@ function Users() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
-            var dataResp=await resp.json();
-            console.log(dataResp);
+            var dataResp=await resp.json();  // +++ check resp, there can be problems starting trace
             setShowUserTrace(true);
             setButtonText('stop');
         }
         else {
-            console.log('stoppppp');
             var body={
-                "validator":validator,
-                "id":0
+                "validator":validator
             };
             fetch(`${ctx.baseApiUrl}/trace/stop`, { method:'POST', body: JSON.stringify(body), headers: { 'Content-Type':'application/json'}});
-
             setShowUserTrace(false);
             setButtonText('start');
         }
-
     }
 
     return (
         <>
-            <Tabs value={currentTab} onChange={changeTab}>
+            <Tabs value={currentTab} onChange={changeTab} centered>
                 <Tab value='actions' label='Actions'/>
                 <Tab value='diagnostics' label='Diagnostics'/>
             </Tabs>
             { currentTab==='actions' && (
-                <Stack direction={"column"} sx={{ml:'10px', mt:'10px'}}>
-                    <Stack direction='column'>
+                <Stack direction={"column"} sx={{m:2}}>
+                    <Stack direction='column' sx={{m:1}}>
                         <Typography variant="h6">
                         Invalidate token for user
                         </Typography>
-                        <TextField label="Subject" variant="standard" sx={{ ml:'10px', width:'300px'}}></TextField>
+                        <Stack direction={'row'} sx={{ m:1 }} alignItems={'baseline'} >
+                            <TextField onChange={(e) => { setinvSubject(e.target.value) }} label="Subject" variant="standard" sx={{ width:'300px', mr:1 }}></TextField>
+                            <Button onClick={ invSubjectClick } variant="contained" disabled={invSubject===''}>set</Button>
+                        </Stack>
                     </Stack>
 
-                    <Stack direction='column' sx={{mt:'20px'}}>
+                    <Stack direction='column' sx={{m:1}}>
                         <Typography variant="h6">
                         Invalidate token conatining...
                         </Typography>
-                        <TextField label="Claim" variant="standard" sx={{ ml:'10px', width:'300px'}}></TextField>
-                        <TextField label="Issuer" variant="standard" sx={{ ml:'10px', width:'300px'}}></TextField>
-                        <TextField label="Audience" variant="standard" sx={{ ml:'10px', width:'300px'}}></TextField>
+
+                        <Stack direction={'row'} sx={{ m:1 }} alignItems={'baseline'} >
+                            <TextField onChange={(e) => { setInvClaim(e.target.value) }} label="Claim" variant="standard" sx={{ width:'300px', mr:1}}></TextField>
+                            <Button onClick={ invClaimClick } variant="contained" disabled={invClaim===''}>set</Button>
+                        </Stack>
+
+                        <Stack direction={'row'} sx={{ m:1 }} alignItems={'baseline'} >
+                            <TextField onChange={(e) => { setInvIss(e.target.value) }} label="Issuer" variant="standard" sx={{ width:'300px', mr:1}}></TextField>
+                            <Button onClick={ invIssClick } variant="contained" disabled={invIss===''}>set</Button>
+                        </Stack>
+
+                        <Stack direction={'row'} sx={{ m:1 }} alignItems={'baseline'} >
+                            <TextField onChange={(e) => { setInvAud(e.target.value) }} label="Audience" variant="standard" sx={{ width:'300px', mr:1}}></TextField>
+                            <Button onClick={ invAudClick } variant="contained" disabled={invAud===''}>set</Button>
+                        </Stack>
+
                     </Stack>
                 </Stack>
             )}
             { currentTab==='diagnostics' && (
-                <Stack direction={"column"} sx={{ml:'10px', mt:'10px'}} flex='auto' >
+                <Stack direction={"column"} sx={{m:2}} >
                     <Stack direction='column' sx={{m:1}}>
                         <Typography variant="h6">
                             Trace user
                         </Typography>
-                        <FormControl variant="standard" sx={{ width: '200px' }}>
+                        <FormControl variant="standard" sx={{ m:1, width: '200px' }}>
                             <InputLabel id="labelVal">Validator</InputLabel>
-                            <Select labelId="labelVal" value={validator} onChange={handleChange} label="Validator">
+                            <Select labelId="labelVal" value={validator} onChange={handleValidatorChange} label="Validator">
                                 { validators.map( (v:any) => {
                                     var value=`${v.name}`;
                                     return <MenuItem value={value}>{value}</MenuItem>
@@ -100,9 +126,9 @@ function Users() {
                             </Select>
                         </FormControl>
 
-                        <Stack direction={'row'} sx={{ m:1 }} spacing={1} alignItems={'baseline'}>
-                            <TextField label="Subject" variant="standard" sx={{ width:'300px'}} onChange={(e) => { setSubject(e.target.value) }} disabled={buttonText==='stop'}></TextField>
-                            <Button onClick={ startClick } variant="contained" disabled={subject===''}>{buttonText}</Button>
+                        <Stack direction={'row'} sx={{ m:1 }} alignItems={'baseline'} >
+                            <TextField label="Subject" variant="standard" sx={{ width:'300px', mr:1}} onChange={(e) => { setTraceSubject(e.target.value) }} disabled={buttonText==='stop'}></TextField>
+                            <Button onClick={ startClick } variant="contained" disabled={traceSubject===''}>{buttonText}</Button>
                         </Stack>
                     </Stack>
 
@@ -110,7 +136,7 @@ function Users() {
             )}
             { currentTab==='diagnostics' && showUserTrace && (
                 <Box sx={{ml:'20px', mt:'30px'}}>
-                    <UserTrace subject={subject} validator={validator}></UserTrace>
+                    <UserTrace subject={traceSubject} validator={validator}></UserTrace>
                 </Box>
             )}
         </>
