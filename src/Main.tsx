@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Rulesets from "./components/Rulesets";
 import Validators from "./components/Validators";
 import { Image } from 'mui-image'
-import Users from "./components/Users";
+//import Users from "./components/";
 import Actions from "./components/Actions";
 
 
@@ -23,7 +23,7 @@ function Main() {
     const [showOverview, setShowOverview] = useState(false);
     const [showValidators, setShowValidators] = useState(false);
     const [showRulesets, setShowRulesets] = useState(false);
-    const [showUsers, setShowUsers] = useState(false);
+    //const [showUsers, setShowUsers] = useState(false);
     const [showActions, setShowActions] = useState(false);
     const [showDialog, setShowDialog] = useState({ visible:false, title:'Error', message:'Error text unspecified.', target:'' });
 
@@ -42,7 +42,7 @@ function Main() {
         setShowOverview(false);
         setShowValidators(false);
         setShowRulesets(false);
-        setShowUsers(false);
+        //setShowUsers(false);
         setShowActions(false);
     }
 
@@ -61,10 +61,10 @@ function Main() {
         setShowRulesets(true);
     }
 
-    const usersClick = () => {
-        allFalse();
-        setShowUsers(true);
-    }
+    // const usersClick = () => {
+    //     allFalse();
+    //     setShowUsers(true);
+    // }
 
     const actionsClick = () => {
         allFalse();
@@ -126,13 +126,6 @@ function Main() {
 
                     <Divider/>                   
                     
-                    <ListItem key='Users'>
-                        <ListItemButton onClick={usersClick}>
-                            <ListItemIcon><Group/></ListItemIcon>
-                            <ListItemText>Users</ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-
                     <ListItem key='Actions'>
                         <ListItemButton onClick={actionsClick}>
                             <ListItemIcon><RocketLaunch/></ListItemIcon>
@@ -160,7 +153,6 @@ function Main() {
             {  showValidators && <Validators/> }
             {  showRulesets && <Rulesets/> }
             {  showActions && <Actions/> }
-            {  showUsers && <Users/> }
             {/* <Dialog open={(showDialog as any).visible} onClose={closeDialogClick}> */}
             <Dialog open={(showDialog as any).visible}>
                 <DialogTitle id="alert-dialog-title">

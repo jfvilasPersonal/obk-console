@@ -45,8 +45,6 @@ function UserTrace(props:any) {
 
     return (
         <>
-            User Trace for user: <b>{props.subject}</b> on validator <b>{props.validator}</b>.
-            <Divider sx={{mt:'5px'}}/>
             <Typography variant="body2"><pre>{content}</pre></Typography>
         </>
     );
