@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Context } from "../model/Context";
 import useInterval from "use-interval";
 import { Divider, Typography } from "@mui/material";
+import { post } from "../tools/Utils";
 
 
 function UserTrace(props:any) {
@@ -27,18 +28,20 @@ function UserTrace(props:any) {
             "validator":props.validator,
             "id":id
         };
-        var resp = await fetch(`${ctx.baseApiUrl}/trace/events`, { method:'POST', body: JSON.stringify(body), headers: {"Content-Type": "application/json"} });
+        var resp = await post(`${ctx.baseApiUrl}/trace/events`, body);
         var data = await resp.json();
         if (data.ok && data.events && data.events.length>0) {
             var rcs=data.events as RequestContext[];
             var lines='';
+            var max=id;
             for (var rc of rcs) {
-                lines+=rc.epoch+'  '+rc.action + '\r\n';
-                if (rc.epoch>id) {
+                lines+=new Date (rc.epoch).toDateString() + ' ' + new Date (rc.epoch).toTimeString() + '  '+rc.action + '\r\n';
+                if (rc.epoch>max) {
                     console.log('update '+rc.epoch);
-                    setId(id => rc.epoch);
+                    max=rc.epoch;
                 }
             }
+            setId(id => max);
             setContent (content+lines);
         }
     }, 250);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Context } from "../model/Context";
 import { Box, Button, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Tab, Tabs, TextField, Typography } from "@mui/material";
 import UserTrace from "./UserTrace";
-import { post } from "../tools/http";
+import { post } from "../tools/Utils";
 
 function Actions() {
     const ctx:Context = new Context();
@@ -55,11 +55,7 @@ function Actions() {
                 "maxEvents":100
             };
     
-            var resp = await fetch (`${ctx.baseApiUrl}/trace/subject`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+            var resp = await post (`${ctx.baseApiUrl}/trace/subject`, data);
             var dataResp=await resp.json();  // +++ check resp, there can be problems starting trace
             setTraceRunning(true);
             setButtonText('stop');
@@ -68,7 +64,7 @@ function Actions() {
             var body={
                 "validator":validator
             };
-            fetch(`${ctx.baseApiUrl}/trace/stop`, { method:'POST', body: JSON.stringify(body), headers: { 'Content-Type':'application/json'}});
+            post(`${ctx.baseApiUrl}/trace/stop`, body);
             setTraceRunning(false);
             setButtonText('start');
         }
@@ -144,7 +140,7 @@ function Actions() {
                                 <TextField onChange={(e) => { setInvAudience(e.target.value) }} label="Audience" variant="standard" sx={{ width:'300px', mr:1}}></TextField>
                             </Stack>
 
-                            <Button onClick={ invalidateSetClick } variant="contained" disabled={invSubject===''||invAudience===''||invIssuer===''||invClaim===''}>set</Button>
+                            <Button onClick={ invalidateSetClick } variant="contained" disabled={invSubject===''&&invAudience===''&&invIssuer===''&&invClaim===''}>set</Button>
 
                         </Stack>
                     </Stack>
