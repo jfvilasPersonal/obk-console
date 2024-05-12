@@ -19,7 +19,7 @@ function Overview() {
     const getStatus =  () => {
         fetch(`${ctx.baseApiUrl}/overview/status`).then( response => response.json().then ( data => setStatus(data)) );
     }
-    const getValidators =  () => {
+    const getValidators = () => {
         fetch(`${ctx.baseApiUrl}/overview/validators`).then( response => response.json().then ( (data:any[]) => {
             // data: [
             //     { id: 0, value: 10, label: 'Validtor 1' },
@@ -40,12 +40,15 @@ function Overview() {
             console.log(series3);
             setBarSerieNames(series3);
 
-            fetch(`${ctx.baseApiUrl}/overview/validators/stats`).then( response => response.json().then ( (data:any[]) => {
-                var series2:any[]=[];
-                data.map( item => series2.push (item.totalRequests/item.totalMicros) );
-                console.log(series2);
-                setBarData(series2);   
-            }));
+            series3.map (async seriesname => {
+                const getValStats = async () => {
+                    fetch(`${ctx.baseApiUrl}/overview/validator/${seriesname}/stats`).then( response => response.json().then ( (data:any[]) => {
+                    }));
+                }
+                var seriesdata=await getValStats();
+                console.log(seriesname);
+                console.log(seriesdata);
+            });
 
         }));
     }
