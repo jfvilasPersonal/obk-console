@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Context } from "./model/Context";
-import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Toolbar, Tooltip, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import UserIcon from '@mui/icons-material/Person';
 import { Beenhere, ExitToApp, Link, RocketLaunch, Rule, Settings } from "@mui/icons-material";
@@ -11,6 +11,7 @@ import Validators from "./components/Validators";
 import { Image } from 'mui-image'
 //import Users from "./components/";
 import Actions from "./components/Actions";
+import { VERSION } from "./version";
 
 
 function Main() {
@@ -148,12 +149,17 @@ function Main() {
                         </ListItemButton>
                     </ListItem>
                 </List>
+
+                <Typography sx={{ textAlign:"right", mr:1 }} fontSize={8} color={'lightgray'}>
+                    {VERSION}
+                </Typography>
+
             </Drawer>
             {  showOverview && <Overview/>  }
             {  showValidators && <Validators/> }
             {  showRulesets && <Rulesets/> }
             {  showActions && <Actions/> }
-            {/* <Dialog open={(showDialog as any).visible} onClose={closeDialogClick}> */}
+
             <Dialog open={(showDialog as any).visible}>
                 <DialogTitle id="alert-dialog-title">
                     {(showDialog as any).title}

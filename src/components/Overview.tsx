@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Context } from "../model/Context";
-import { Stack, Button, Typography } from "@mui/material";
+import { Stack, Button, Typography, Box } from "@mui/material";
 import JSONTable from 'simple-json-table'; 
 import { PieChart } from "@mui/x-charts";
 import { BarChart } from "@mui/x-charts";
+import { reduce } from "../tools/Utils";
 
 function Overview() {
     const ctx:Context = new Context();
     const [env, setEnv] = useState({});
     const [status, setStatus] = useState({totalRequests:0, totalMicros:0});
     const [pieData, setPieData] = useState<any>([]);
-    const [barData, setBarData] = useState<any>([]);
+    const [barData, setBarData] = useState<any[]>([]);
     const [barSerieNames, setBarSerieNames] = useState<any>([]);
 
     const getConfig =  () => {
@@ -21,34 +22,34 @@ function Overview() {
     }
     const getValidators = () => {
         fetch(`${ctx.baseApiUrl}/overview/validators`).then( response => response.json().then ( (data:any[]) => {
-            // data: [
-            //     { id: 0, value: 10, label: 'Validtor 1' },
-            //     { id: 1, value: 15, label: 'Validator2' }
-            // ],
-            var id=0;
-            var series:any[]=[];
-            data.map( item => series.push ({ id:id++, value: item.decoderInstance.totalRequests, label:item.name}) );
-            console.log(series);
-            var test = [
-                { id: 0, value: 10, label: 'Validtor 1' },
-                { id: 1, value: 15, label: 'Validator2' }
-            ];
-            setPieData(series);
 
-            var series3:any[]=[];
-            data.map( item => series3.push (item.name) );
-            console.log(series3);
-            setBarSerieNames(series3);
+            var valNames:any[]=[];
+            data.map( item => valNames.push (item.name) );
+            console.log(valNames);
+            setBarSerieNames(valNames);
 
-            series3.map (async seriesname => {
-                const getValStats = async () => {
-                    fetch(`${ctx.baseApiUrl}/overview/validator/${seriesname}/stats`).then( response => response.json().then ( (data:any[]) => {
-                    }));
+            const loadData = async () => {
+                var id=0;
+                var pieseries:any[]=[];
+                var barseries:any[]=[];
+                for (var seriesname of valNames) {
+                    const getData = async (sn:string) => {
+                        var resp= await fetch(`${ctx.baseApiUrl}/validator/${sn}/stats`);
+                        var data = await resp.json();
+                        console.log('data');
+                        console.log(data);
+                        return data;
+                    }
+                    var a=await getData(seriesname);
+                    pieseries.push({ id:id++, value: a.totalRequests, label:a.name}) 
+                    barseries.push(a.totalRequests/a.totalMicros);
                 }
-                var seriesdata=await getValStats();
-                console.log(seriesname);
-                console.log(seriesdata);
-            });
+                console.log('sd');
+                console.log(barseries);
+                setBarData(barseries);
+                setPieData(pieseries);
+            }
+            loadData();
 
         }));
     }
@@ -64,8 +65,14 @@ function Overview() {
     return (
         <>
             <Stack direction='row' sx={{alignItems:'center'}}>
-                <PieChart title='Request distribution' width={500} height={200} series={[  { data:pieData }  ]} />
-                <BarChart title='Average response time' width={500} height={200} xAxis={[{ scaleType: 'band', data: barSerieNames }]} series={[{ data: barData } ]}/>
+                <Stack sx={{alignItems:'center', width:'50%'}}>
+                    <Typography>Total Requests</Typography>
+                    <PieChart title='Request distribution' height={200} series={[  { data:pieData }  ]} />
+                </Stack>
+                <Stack sx={{alignItems:'center', width:'50%'}}>
+                    <Typography>Average Processing Time</Typography>
+                    <BarChart title='Average response time' height={200} xAxis={[{ scaleType: 'band', data: barSerieNames }]} series={[{ data: barData } ]}/>
+                </Stack>
             </Stack>
             <Typography variant="body2">
                 <JSONTable source={env}/>
