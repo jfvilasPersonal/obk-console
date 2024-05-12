@@ -3,7 +3,7 @@ import { Context } from "./model/Context";
 import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import UserIcon from '@mui/icons-material/Person';
-import { Beenhere, ExitToApp, Group, Link, RocketLaunch, Rule, Settings } from "@mui/icons-material";
+import { Beenhere, ExitToApp, Link, RocketLaunch, Rule, Settings } from "@mui/icons-material";
 import Overview from "./components/Overview";
 import { useNavigate } from "react-router-dom";
 import Rulesets from "./components/Rulesets";

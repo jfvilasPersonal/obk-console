@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Context } from "../model/Context";
 import useInterval from "use-interval";
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { post } from "../tools/Utils";
 
 
