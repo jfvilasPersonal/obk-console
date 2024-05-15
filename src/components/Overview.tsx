@@ -62,17 +62,20 @@ function Overview() {
         getStatus();
     }
 
+    //+++ falta revisar porqué el obk-console-authorizator suma bien las requests globales pero no suma las del validador
     return (
         <>
             <Stack direction='row' sx={{alignItems:'center'}}>
-                <Stack sx={{alignItems:'center', width:'50%'}}>
+                <Typography sx={{width:'20%'}}></Typography>
+                <Stack sx={{alignItems:'center', width:'30%'}}>
                     <Typography>Total Requests</Typography>
                     <PieChart title='Request distribution' height={200} series={[  { data:pieData }  ]} />
                 </Stack>
-                <Stack sx={{alignItems:'center', width:'50%'}}>
+                <Stack sx={{alignItems:'center', width:'30%'}}>
                     <Typography>Average Processing Time</Typography>
                     <BarChart title='Average response time' height={200} xAxis={[{ scaleType: 'band', data: barSerieNames }]} series={[{ data: barData } ]}/>
                 </Stack>
+                <Typography sx={{width:'20%'}}></Typography>
             </Stack>
             <Typography variant="body2">
                 <JSONTable source={env}/>
