@@ -5,6 +5,7 @@ import JSONTable from 'simple-json-table';
 import { PieChart } from "@mui/x-charts";
 import { BarChart } from "@mui/x-charts";
 import { reduce } from "../tools/Utils";
+import useInterval from "use-interval";
 
 function Overview() {
     const ctx:Context = new Context();
@@ -57,6 +58,29 @@ function Overview() {
     useEffect(getStatus, []);
     useEffect(getConfig, []);
     useEffect(getValidators, []);
+
+    useInterval ( async () => {
+        // var body = {
+        //     "validator":props.validator,
+        //     "id":id
+        // };
+        // var resp = await post(`${ctx.baseApiUrl}/trace/events`, body);
+        // var data = await resp.json();
+        // if (data.ok && data.events && data.events.length>0) {
+        //     var rcs=data.events as RequestContext[];
+        //     var lines='';
+        //     var max=id;
+        //     for (var rc of rcs) {
+        //         lines+=new Date (rc.epoch).toDateString() + ' ' + new Date (rc.epoch).toTimeString() + '  '+rc.action + '\r\n';
+        //         if (rc.epoch>max) {
+        //             console.log('update '+rc.epoch);
+        //             max=rc.epoch;
+        //         }
+        //     }
+        //     // setId(id => max);
+        //     // setContent (content+lines);
+        // }
+    }, 1000);
 
     const statusRefreshClick = () => {
         getStatus();
