@@ -43,7 +43,6 @@ function Main() {
         setShowOverview(false);
         setShowValidators(false);
         setShowRulesets(false);
-        //setShowUsers(false);
         setShowActions(false);
     }
 
@@ -61,11 +60,6 @@ function Main() {
         allFalse();
         setShowRulesets(true);
     }
-
-    // const usersClick = () => {
-    //     allFalse();
-    //     setShowUsers(true);
-    // }
 
     const actionsClick = () => {
         allFalse();

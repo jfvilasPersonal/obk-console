@@ -1,8 +1,7 @@
-//import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from "@mui/material";
 import { Context } from "./model/Context";
-import { useEffect, useState } from "react";
 import { Image } from 'mui-image'
 
 function Welcome() {
@@ -21,7 +20,6 @@ function Welcome() {
         // authorizator var contains 'namespace/authname'
         ctx.authenticated=true;
         ctx.username='admin';
-        //ctx.baseApiUrl=`/obk-authorizator/${authorizator}/api`;
         ctx.baseApiUrl=`/obk-console/proxy/${authorizator}/api`;
         ctx.save();
         navigate(`/obk-console/${authorizator}/main`);
